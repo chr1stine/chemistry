@@ -1,6 +1,7 @@
 const express = require('express');
 const elements = require('./elements.js');
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.set('view engine','ejs');
 
@@ -18,4 +19,4 @@ app.get('/elements/:elementName', (req, res) => {
     });
 });
 
-app.listen(3000);
+app.listen(port);
