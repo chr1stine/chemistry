@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все элементы</title>
+</head>
+<body>
+    <style>
+        .wrapper{
+            position: absolute;
+            top: 6vh;
+            left: 6vw;
+        }
+
+        .container{
+            display: grid;
+            grid-template-columns: repeat(18,1fr);
+
+            border-bottom: 1px solid black;
+            border-left: 1px solid black;
+        }
+
+        .container > a{
+            width: 85px;
+            height: 85px;
+
+            border-top: 1px solid rgb(41, 22, 22);
+            border-right: 1px solid black;
+
+            /* padding: 0.1em; */
+
+            line-height: 0.3;
+            text-decoration: none;
+            color: black;
+        }
+
+        .name{
+            font-size: smaller;
+        }
+        
+        .symbol,.name,.number{
+            margin-left : 0.2em;
+        }
+    </style>
+    <div class="wrapper">
+        <h1>Таблица Менделеева</h1>
+        <div class='container'></div>
+    </div>
+    <script>
+        function drawCells(){
+            var parent = document.querySelector('.container');
+            for(p=1;p<=7;p++){
+                for(g=1;g<=18;g++){
+                    let a = document.createElement('a');
+                    a.setAttribute('class','p'+p.toString()+' g'+g.toString());
+                    parent.appendChild(a);
+                }
+            }
+        }
+
+        function loadElements(){
+            var elements = <%- JSON.stringify(data) %>;
+            elements.forEach(element => {
+                let s = '.p'+element.period+'.g'+element.group;
+                let a = document.querySelectorAll(s)[0];
+                a.setAttribute('href','/elements/'+element.name);
+
+                let symbol = document.createElement('h3');
+                symbol.setAttribute('class','symbol');
+                symbol.innerHTML = element.symbol;
+
+                let name = document.createElement('p');
+                name.setAttribute('class','name');
+                name.innerHTML = element.name;
+
+                let number = document.createElement('p');
+                number.setAttribute('class','number');
+                number.innerHTML = element.number;
+
+                if (a != null){
+                    a.appendChild(symbol);
+                    a.appendChild(name);
+                    a.appendChild(number);
+                }
+            });
+        }
+    
+        drawCells();
+        loadElements();
+    </script>
+</body>
+</html>
