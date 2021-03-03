@@ -5,7 +5,11 @@ const port = process.env.PORT || 3000;
 
 app.set('view engine','ejs');
 
-app.get('/', (req, res) => { 
+app.get('/',(req,res)=>{
+    res.redirect('/elements');
+});
+
+app.get('/elements', (req, res) => { 
     res.render('index', { data: elements });
 });
 
